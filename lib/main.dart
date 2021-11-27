@@ -23,48 +23,49 @@ class GlobalDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Box box = Hive.box(settingsBox);
-    String baseUrl = box.get('baseUrl');
-
-    return Drawer(
-      child: ListView(
-        // Important: Remove any padding from the ListView.
-        padding: EdgeInsets.zero,
-        children: [
-          DrawerHeader(
-            decoration: const BoxDecoration(
-              color: Colors.deepPurple,
-            ),
-            child: Column(
-              children: [
-                const Text('HackChat',
-                  style: TextStyle(
-                    fontSize: 28,
-                    color: Colors.white
-                  )
+    return ValueListenableBuilder(
+      valueListenable: Hive.box('settings').listenable(),
+      builder: (context, Box box, widget) {
+        return Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: [
+              DrawerHeader(
+                decoration: const BoxDecoration(
+                  color: Colors.deepPurple,
                 ),
-                Text(Uri.parse(baseUrl).host,
-                  style: const TextStyle(
-                    color: Colors.white
-                  )
+                child: Column(
+                  children: [
+                    const Text('HackChat',
+                      style: TextStyle(
+                        fontSize: 28,
+                        color: Colors.white,
+                      ),
+                    ),
+                    Text(Uri.parse(box.get('baseUrl')).host,
+                      style: const TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            )
+              ),
+              ListTile(
+                title: const Text('Create / Join a room'),
+                onTap: () {
+                  openChat(context);
+                },
+              ),
+              ListTile(
+                title: const Text('Settings'),
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingsPage()));
+                },
+              ),
+            ],
           ),
-          ListTile(
-            title: const Text('Create / Join a room'),
-            onTap: () {
-              openChat(context);
-            },
-          ),
-          ListTile(
-            title: const Text('Settings'),
-            onTap: () {
-              // todo: open settings
-            },
-          ),
-        ],
-      ),
+        );
+      }
     );
   }
 }
@@ -191,8 +192,8 @@ void _openRoomPage(BuildContext context, String roomName) {
         return SetNicknameSheet(onInput: (text) {
           box.put('nickname', text);
           Navigator.push(context, MaterialPageRoute(builder: (context) => ChatRoomPage(
-              roomName: roomName,
-              nickname: text
+            roomName: roomName,
+            nickname: text
           )));
         });
       },
@@ -279,6 +280,8 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
   Widget build(BuildContext context) {
     Box box = Hive.box(settingsBox);
     String baseUrl = box.get('baseUrl');
+
+    String roomName = widget.roomName;
 
     return Scaffold(
       drawer: const GlobalDrawer(),

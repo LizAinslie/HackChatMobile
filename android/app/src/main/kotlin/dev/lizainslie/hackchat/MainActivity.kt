@@ -1,6 +1,5 @@
-package dev.lizainslie.ninjachat.chat_ninja
+package dev.lizainslie.hackchat
 
 import io.flutter.embedding.android.FlutterActivity
 
-class MainActivity: FlutterActivity() {
-}
+class MainActivity: FlutterActivity() {}
