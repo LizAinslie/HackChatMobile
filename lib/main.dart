@@ -242,21 +242,30 @@ class MyHomePage extends StatefulWidget {
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
+
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    Box box = Hive.box(settingsBox);
-    String baseUrl = box.get('baseUrl');
-
-    return Scaffold(
-      drawer: const GlobalDrawer(),
-      appBar: AppBar(
-        title: Text(Uri.parse(baseUrl).host),
-      ),
-      body: WebView(
-        initialUrl: baseUrl,
-        javascriptMode: JavascriptMode.unrestricted,
-      )
+    return ValueListenableBuilder(
+      valueListenable: Hive.box('settings').listenable(),
+      builder: (context, Box box, widget) {
+        String baseUrl = box.get('baseUrl');
+        return Scaffold(
+          drawer: const GlobalDrawer(),
+          appBar: AppBar(
+            title: Text(Uri
+            .parse(baseUrl)
+            .host),
+          ),
+          body: WebView(
+            initialUrl: baseUrl,
+            javascriptMode: JavascriptMode.unrestricted,
+            onWebViewCreated: (controller) {
+              controller.loadUrl(baseUrl);
+            },
+          ),
+        );
+      },
     );
   }
 }
@@ -294,9 +303,14 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
           }, icon: const Icon(Icons.home))
         ],
       ),
-      body: WebView(
-        initialUrl: '$baseUrl?${widget.roomName}#${box.get('nickname')}',
-        javascriptMode: JavascriptMode.unrestricted,
+      body: ValueListenableBuilder(
+        valueListenable: Hive.box('settings').listenable(),
+        builder: (context, Box box, widget) {
+          return WebView(
+            initialUrl: '$baseUrl?$roomName#${box.get('nickname')}',
+            javascriptMode: JavascriptMode.unrestricted,
+          );
+        },
       ),
     );
   }
