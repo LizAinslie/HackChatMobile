@@ -6,6 +6,7 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:settings_ui/settings_ui.dart';
 
 const defaultBaseUrl = 'https://hack.chat';
 const settingsBox = 'settings';
@@ -311,9 +312,41 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
-    Box box = Hive.box(settingsBox);
-    String baseUrl = box.get('baseUrl');
-    return Container();
+    return Scaffold(
+      appBar: AppBar(),
+      body: ValueListenableBuilder(
+        valueListenable: Hive.box('settings').listenable(),
+        builder: (context, Box box, widget) {
+          return Container(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              children: [
+                const Text('Base URL',
+                  style: TextStyle(fontWeight: FontWeight.bold)
+                ),
+                TextFormField(
+                  initialValue: box.get('baseUrl'),
+                  onChanged: (text) {
+                    box.put('baseUrl', text);
+                  },
+                ),
+                const Padding(padding: EdgeInsets.only(top: 16),
+                  child: Text('Nickname',
+                    style: TextStyle(fontWeight: FontWeight.bold)
+                  ),
+                ),
+                TextFormField(
+                  initialValue: box.get('nickname'),
+                  onChanged: (text) {
+                    box.put('nickname', text);
+                  },
+                ),
+              ],
+            ),
+          );
+        },
+      ),
+    );
   }
 }
 
