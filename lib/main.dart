@@ -224,7 +224,7 @@ class MyApp extends StatelessWidget {
     String baseUrl = box.get('baseUrl');
 
     return MaterialApp(
-      title: Uri.parse(baseUrl).host,
+      title: 'HackChat',
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
       ),

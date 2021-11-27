@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="dev.lizainslie.ninjachat.chat_ninja">
+    package="dev.lizainslie.hackchat">
 
     <queries>
         <intent>
@@ -10,7 +10,7 @@
     </queries>
     <uses-permission android:name="android.permission.INTERNET"/>
     <application
-        android:label="chat_ninja"
+        android:label="HackChat Android"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
