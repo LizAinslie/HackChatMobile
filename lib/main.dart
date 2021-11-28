@@ -6,7 +6,6 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:settings_ui/settings_ui.dart';
 
 const defaultBaseUrl = 'https://hack.chat';
 const settingsBox = 'settings';
@@ -89,7 +88,7 @@ class _SetNicknameSheetState extends State<SetNicknameSheet> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
+        children: [
           const Text('Set a nickname'),
           TextField(
             onChanged: (text) {
@@ -142,7 +141,7 @@ class _OpenChatSheetState extends State<OpenChatSheet> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
+        children: [
           const Text('Join or create a room'),
           TextField(
             onChanged: (text) {
