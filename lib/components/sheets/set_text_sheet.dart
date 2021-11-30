@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
-class SetNicknameSheet extends StatefulWidget {
-  const SetNicknameSheet({Key? key, required this.onInput}) : super(key: key);
+class SetTextSheet extends StatefulWidget {
+  const SetTextSheet({Key? key, required this.onInput, required this.header, this.initialValue = ''}) : super(key: key);
   final void Function(String) onInput;
+  final String header;
+  final String initialValue;
 
   @override
-  _SetNicknameSheetState createState() => _SetNicknameSheetState();
+  _SetTextSheetState createState() => _SetTextSheetState();
 }
-class _SetNicknameSheetState extends State<SetNicknameSheet> {
+class _SetTextSheetState extends State<SetTextSheet> {
   String _textFieldText = '';
 
   @override
@@ -19,8 +21,11 @@ class _SetNicknameSheetState extends State<SetNicknameSheet> {
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Text('Set a nickname'),
-          TextField(
+          Text(widget.header,
+            style: Theme.of(context).textTheme.headline5,
+          ),
+          TextFormField(
+            initialValue: widget.initialValue,
             onChanged: (text) {
               setState(() {
                 _textFieldText = text;
@@ -39,15 +44,15 @@ class _SetNicknameSheetState extends State<SetNicknameSheet> {
                   },
                 ),
                 Padding(
-                    padding: const EdgeInsets.only(left: 16),
-                    child: ElevatedButton(
-                      child: const Text('Cancel'),
-                      onPressed: () => Navigator.pop(context),
-                    )
-                )
+                  padding: const EdgeInsets.only(left: 16),
+                  child: ElevatedButton(
+                    child: const Text('Cancel'),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );

@@ -3,7 +3,7 @@ import 'package:hive/hive.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'components/sheets/open_chat_sheet.dart';
-import 'components/sheets/set_nickname_sheet.dart';
+import 'components/sheets/set_text_sheet.dart';
 
 import 'pages/chat_room.dart';
 
@@ -21,13 +21,16 @@ void openRoomPage(BuildContext context, String roomName) {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
-        return SetNicknameSheet(onInput: (text) {
-          settings.put('nickname', text);
-          Navigator.push(context, MaterialPageRoute(builder: (context) => ChatRoomPage(
-            roomName: roomName,
-            nickname: text
-          )));
-        });
+        return SetTextSheet(
+          header: 'Set your nickname',
+          onInput: (text) {
+            settings.put('nickname', text);
+            Navigator.push(context, MaterialPageRoute(builder: (context) => ChatRoomPage(
+              roomName: roomName,
+              nickname: text
+            )));
+          },
+        );
       },
     );
   }
