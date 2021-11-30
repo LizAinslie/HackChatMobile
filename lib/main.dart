@@ -10,10 +10,13 @@ import 'package:url_launcher/url_launcher.dart';
 const defaultBaseUrl = 'https://hack.chat';
 const settingsBox = 'settings';
 
-Future<void> main() async {
+main() async {
   await Hive.initFlutter();
-  await Hive.openBox(settingsBox);
-  Hive.box(settingsBox).put('baseUrl', defaultBaseUrl);
+  Box settings = await Hive.openBox(settingsBox);
+
+  if (!settings.containsKey('baseUrl')) {
+    settings.put('baseUrl', defaultBaseUrl);
+  }
 
   runApp(const MyApp());
 }
