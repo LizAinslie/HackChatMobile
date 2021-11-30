@@ -1,15 +1,18 @@
-import 'package:HackChat/pages/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'common.dart';
+import 'data/pinned_room.dart';
+import 'pages/home.dart';
 
 const defaultBaseUrl = 'https://hack.chat';
 
 main() async {
   await Hive.initFlutter();
+  Hive.registerAdapter<PinnedRoom>(PinnedRoomAdapter());
+  Box<PinnedRoom> pinnedRooms = await Hive.openBox<PinnedRoom>(pinnedRoomsBox);
   Box settings = await Hive.openBox(settingsBox);
 
   if (!settings.containsKey('baseUrl')) {

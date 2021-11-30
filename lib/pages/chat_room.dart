@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:HackChat/pages/room_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -42,7 +43,10 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
             actions: [
               IconButton(onPressed: () {
                 Navigator.pop(context);
-              }, icon: const Icon(Icons.home))
+              }, icon: const Icon(Icons.home)),
+              IconButton(onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => RoomSettingsPage(roomName: widget.roomName)));
+              }, icon: const Icon(Icons.settings)),
             ],
           ),
           body: WebView(

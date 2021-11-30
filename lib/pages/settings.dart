@@ -17,7 +17,7 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Settings')
+        title: const Text('Settings'),
       ),
       body: ValueListenableBuilder(
         valueListenable: Hive.box(settingsBox).listenable(),

@@ -8,6 +8,7 @@ import 'components/sheets/set_text_sheet.dart';
 import 'pages/chat_room.dart';
 
 const settingsBox = 'settings';
+const pinnedRoomsBox = 'saved_rooms'; // I changed the variable name mid-commit but the box name stays.
 
 void openRoomPage(BuildContext context, String roomName) {
   Box settings = Hive.box(settingsBox);
