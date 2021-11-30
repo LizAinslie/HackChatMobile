@@ -16,6 +16,10 @@ main() async {
     settings.put('baseUrl', defaultBaseUrl);
   }
 
+  if (!settings.containsKey('darkMode')) {
+    settings.put('darkMode', false);
+  }
+
   runApp(const MyApp());
 }
 
@@ -24,12 +28,25 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'HackChat',
-      theme: ThemeData(
-        primarySwatch: Colors.deepPurple,
-      ),
-      home: const HomePage(),
+    return ValueListenableBuilder(
+      valueListenable: Hive.box(settingsBox).listenable(),
+      builder: (BuildContext context, Box settings, _) {
+        bool darkMode = settings.get('darkMode', defaultValue: false);
+        return MaterialApp(
+          title: 'HackChat',
+          themeMode: darkMode ? ThemeMode.dark : ThemeMode.light,
+          darkTheme: ThemeData.from(
+            colorScheme: const ColorScheme.dark(
+              primary: Colors.deepPurple,
+              primaryVariant: Colors.deepPurpleAccent,
+            ),
+          ),
+          theme: ThemeData(
+            primarySwatch: Colors.deepPurple,
+          ),
+          home: const HomePage(),
+        );
+      },
     );
   }
 }
