@@ -21,6 +21,7 @@ void openRoomPage(BuildContext context, String roomName) {
   } else {
     showModalBottomSheet(
       context: context,
+      isScrollControlled: true,
       builder: (BuildContext context) {
         return SetTextSheet(
           header: 'Set your nickname',

@@ -14,46 +14,59 @@ class _SetTextSheetState extends State<SetTextSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16.0),
-      height: 200,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(widget.header,
-            style: Theme.of(context).textTheme.headline5,
-          ),
-          TextFormField(
-            initialValue: widget.initialValue,
-            onChanged: (text) {
-              setState(() {
-                _textFieldText = text;
-              });
-            },
-          ),
-          Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                  child: const Text('Set'),
-                  onPressed: () {
-                    Navigator.pop(context);
-                    widget.onInput(_textFieldText);
-                  },
+    return SingleChildScrollView(
+      child: Padding(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(widget.header,
+                style: Theme.of(context).textTheme.headline5,
+              ),
+              TextFormField(
+                initialValue: widget.initialValue,
+                autofocus: true,
+                style: const TextStyle(
+                  fontSize: 20,
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 16),
-                  child: ElevatedButton(
-                    child: const Text('Cancel'),
-                    onPressed: () => Navigator.pop(context),
+                onChanged: (text) {
+                  setState(() {
+                    _textFieldText = text;
+                  });
+                },
+              ),
+              Container(
+                padding: const EdgeInsets.only(top: 16),
+                child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ElevatedButton(
+                        child: const Text('Set'),
+                        onPressed: () {
+                          Navigator.pop(context);
+                          widget.onInput(_textFieldText);
+                        },
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16),
+                        child: ElevatedButton(
+                          child: const Text('Cancel'),
+                          onPressed: () => Navigator.pop(context),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

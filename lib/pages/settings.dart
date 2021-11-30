@@ -36,6 +36,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   onTap: () {
                     showModalBottomSheet(
                       context: context,
+                      isScrollControlled: true,
                       builder: (BuildContext context) {
                         return SetTextSheet(
                           header: 'Set a base URL',
@@ -54,6 +55,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   onTap: () {
                     showModalBottomSheet(
                       context: context,
+                      isScrollControlled: true,
                       builder: (BuildContext context) {
                         return SetTextSheet(
                           header: 'Set your nickname',
